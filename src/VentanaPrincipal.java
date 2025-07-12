@@ -113,13 +113,13 @@ public class VentanaPrincipal extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Campo habitacion
-        JLabel lblNombre = new JLabel("Numero de Habitacion:");
-        lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JLabel lblHabitacion = new JLabel("Numero de Habitacion:");
+        lblHabitacion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         JTextField txtHabitacion = new JTextField();
         txtHabitacion.setPreferredSize(new Dimension(150, 25));
 
         gbc.gridx = 0; gbc.gridy = 0;
-        form.add(lblNombre, gbc);
+        form.add(lblHabitacion, gbc);
         gbc.gridx = 1;
         form.add(txtHabitacion, gbc);
 
