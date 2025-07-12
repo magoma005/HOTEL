@@ -2,7 +2,7 @@
 
 public class IDGenerator {
     private static int contadorConsulta = 0;
-    private static int contadorMascota = 0;
+    private static int contadorReservas = 0;
 
     //Método generarCodigoConsulta() devuelve un código con prefijo 'C' y número incremental.
 
@@ -10,9 +10,9 @@ public class IDGenerator {
         return "C" + (++contadorConsulta);
     }
 
-    //Método generarCodigoMascota() devuelve un código con prefijo 'M' y número incremental.
+    //Método generarCodigoReservas() devuelve un código con prefijo 'r' y número incremental.
 
-    public static String generarCodigoMascota() {
-        return "M" + (++contadorMascota);
+    public static String generarCodigoReservas() {
+        return "r" + (++contadorReservas);
     }
 }

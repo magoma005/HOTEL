@@ -1,4 +1,4 @@
-//Se creó la clase Historial para delegar el manejo de consultas de Mascota.
+//Se creó la clase Historial para delegar el manejo de reservas en el hotel
 
 import java.util.ArrayList;
 
@@ -19,9 +19,9 @@ public class Historial {
 
     //Método mostrarConsultas() recorre e imprime cada consulta de forma ordenada.
 
-    public void mostrarConsultas() {
+    public void mostrarReservas() {
         if (consultas.isEmpty()) {
-            System.out.println("⚠️ Sin consultas registradas.");
+            System.out.println("⚠️ Sin reservas registradas.");
         } else {
             for (Consulta c : consultas) {
                 c.mostrarConsulta();

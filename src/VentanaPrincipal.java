@@ -7,11 +7,11 @@ import java.util.ArrayList;
 public class VentanaPrincipal extends JFrame {
 
     private JDesktopPane escritorio;
-    private ArrayList<Mascota> listaPacientes = new ArrayList<>();
+    private ArrayList<Reservas> listaReservas = new ArrayList<>();
 
     public VentanaPrincipal() {
         //CONFIGURACIÓN DE LA VENTANA PRINCIPAL
-        setTitle("PetControl - Sistema de Gestión Clínica Veterinaria");
+        setTitle("Hotel: Buen Dia - Sistema de Gestión del Hotel");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -23,11 +23,11 @@ public class VentanaPrincipal extends JFrame {
 
         //PANEL IZQUIERDO: JTree de servicios
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Servicios");
-        raiz.add(new DefaultMutableTreeNode("Medicina general"));
-        raiz.add(new DefaultMutableTreeNode("Cirugía"));
-        raiz.add(new DefaultMutableTreeNode("Vacunación"));
-        raiz.add(new DefaultMutableTreeNode("Peluquería"));
-        raiz.add(new DefaultMutableTreeNode("Urgencias"));
+        raiz.add(new DefaultMutableTreeNode("Habitaciones"));
+        raiz.add(new DefaultMutableTreeNode("Nuestro Personal"));
+        raiz.add(new DefaultMutableTreeNode("Direccion"));
+        raiz.add(new DefaultMutableTreeNode("Precios"));
+        raiz.add(new DefaultMutableTreeNode("Reseñas"));
 
         JTree arbolServicios = new JTree(raiz);
         JScrollPane scrollArbol = new JScrollPane(arbolServicios);
@@ -39,7 +39,7 @@ public class VentanaPrincipal extends JFrame {
         add(escritorio, BorderLayout.CENTER);
 
         //PIE DE PÁGINA CON INFORMACIÓN
-        JLabel piePagina = new JLabel("© 2025 PetControl. Todos los derechos reservados.", SwingConstants.CENTER);
+        JLabel piePagina = new JLabel("© 2025 Hotel: Buen Dia. Todos los derechos reservados.", SwingConstants.CENTER);
         piePagina.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         add(piePagina, BorderLayout.SOUTH);
 
@@ -47,30 +47,27 @@ public class VentanaPrincipal extends JFrame {
         JMenuBar barraMenu = new JMenuBar();
         JMenu menuArchivo = new JMenu("Archivo");
         menuArchivo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        JMenuItem itemNuevoRegistro = new JMenuItem("Nuevo registro");
+        JMenuItem itemNuevoRegistro = new JMenuItem("Nueva reservacion");
         itemNuevoRegistro.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         JMenuItem itemSalir = new JMenuItem("Salir");
         itemSalir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         // Acción salir
         itemSalir.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "👋 Gracias por usar PetControl. ¡Hasta pronto!");
+            JOptionPane.showMessageDialog(this, "👋 Gracias por visitar el Hotel: Buen Dia. ¡Hasta pronto!");
             System.exit(0);
         });
         // Acción nuevo registro
-        itemNuevoRegistro.addActionListener(e -> crearFormularioIngreso());
+        itemNuevoRegistro.addActionListener(e -> crearFormularioRegistracion());
         menuArchivo.add(itemNuevoRegistro);
         menuArchivo.addSeparator();
         menuArchivo.add(itemSalir);
         JMenu menuVista = new JMenu("Vista");
         menuVista.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        JMenuItem itemPacientes = new JMenuItem("Pacientes");
-        itemPacientes.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        JMenuItem itemConsultas = new JMenuItem("Consultas");
-        itemConsultas.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        // Acción pacientes
-        itemPacientes.addActionListener(e -> mostrarTablaPacientes());
-        menuVista.add(itemPacientes);
-        menuVista.add(itemConsultas);
+        JMenuItem itemReservaciones = new JMenuItem("Reservaciones");
+        itemReservaciones.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        // Acción reservaciones
+        itemReservaciones.addActionListener(e -> mostrarTablaReservaciones());
+        menuVista.add(itemReservaciones);
         barraMenu.add(menuArchivo);
         barraMenu.add(menuVista);
         setJMenuBar(barraMenu);
@@ -84,7 +81,7 @@ public class VentanaPrincipal extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.WHITE);
         // Texto de carga
-        JLabel lblTexto = new JLabel("Cargando PetControl...", SwingConstants.CENTER);
+        JLabel lblTexto = new JLabel("Cargando un buen dia...", SwingConstants.CENTER);
         lblTexto.setFont(new Font("Segoe UI", Font.BOLD, 18));
         panel.add(lblTexto, BorderLayout.NORTH);
         ImageIcon icono = new ImageIcon(VentanaPrincipal.class.getResource("/imagenes/logo.jpg"));
@@ -105,8 +102,8 @@ public class VentanaPrincipal extends JFrame {
     }
 
     //FORMULARIO DE REGISTRO
-    private void crearFormularioIngreso() {
-        JInternalFrame form = new JInternalFrame("Formulario de paciente", true, true, true, true);
+    private void crearFormularioRegistracion() {
+        JInternalFrame form = new JInternalFrame("Formulario de reservacion", true, true, true, true);
         form.setSize(500, 300);
         form.setLayout(new GridBagLayout());
         form.getContentPane().setBackground(Color.WHITE);
@@ -115,74 +112,57 @@ public class VentanaPrincipal extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Campo nombre
-        JLabel lblNombre = new JLabel("Nombre:");
+        // Campo habitacion
+        JLabel lblNombre = new JLabel("Numero de Habitacion:");
         lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        JTextField txtNombre = new JTextField();
-        txtNombre.setPreferredSize(new Dimension(150, 25));
+        JTextField txtHabitacion = new JTextField();
+        txtHabitacion.setPreferredSize(new Dimension(150, 25));
 
         gbc.gridx = 0; gbc.gridy = 0;
         form.add(lblNombre, gbc);
         gbc.gridx = 1;
-        form.add(txtNombre, gbc);
+        form.add(txtHabitacion, gbc);
 
-        // Clave historial
-        JLabel lblClave = new JLabel("Clave historial:");
-        lblClave.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        JPasswordField txtClave = new JPasswordField();
-        txtClave.setPreferredSize(new Dimension(150, 25));
-        // Posiciona el próximo componente en la columna 0 (izquierda)
-        // Incrementa la fila en 1 para ubicar los siguientes componentes en una nueva línea del formulario
-        gbc.gridx = 0; gbc.gridy++;
-        // Agrega la etiqueta lblClave (etiqueta "Clave historial") al formulario en la posición definida
-        // Cambia la posición horizontal a la columna 1 (derecha) para ubicar el campo de texto junto a la etiqueta
-        form.add(lblClave, gbc);
-        gbc.gridx = 1;
-        // Agrega el campo de texto txtClave (campo para ingresar la clave) en la misma fila pero en la columna 1
-        form.add(txtClave, gbc);
-
-        // Especie
-        JLabel lblEspecie = new JLabel("Especie:");
-        lblEspecie.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        String[] especies = {"Perro", "Gato", "Conejo", "Ave", "Oso", "Oso de Anteojos"};
-        JComboBox<String> comboEspecie = new JComboBox<>(especies);
-        comboEspecie.setPreferredSize(new Dimension(150, 25));
+        // Fecha
+        JLabel lblFecha = new JLabel("Fecha:");
+        lblFecha.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JTextField txtFecha = new JTextField();
+        txtFecha.setPreferredSize(new Dimension(150, 25));
 
         gbc.gridx = 0; gbc.gridy++;
-        form.add(lblEspecie, gbc);
+        form.add(lblFecha, gbc);
         gbc.gridx = 1;
-        form.add(comboEspecie, gbc);
+        form.add(txtFecha, gbc);
 
-        // Edad
-        JLabel lblEdad = new JLabel("Edad:");
-        lblEdad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        JSpinner spinnerEdad = new JSpinner(new SpinnerNumberModel(1, 0, 500, 1));
-        ((JSpinner.DefaultEditor) spinnerEdad.getEditor()).getTextField().setPreferredSize(new Dimension(50, 25));
+        // Noches
+        JLabel lblNoches = new JLabel("Noches:");
+        lblNoches.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        JSpinner spinnerNoches = new JSpinner(new SpinnerNumberModel(1, 0, 500, 1));
+        ((JSpinner.DefaultEditor) spinnerNoches.getEditor()).getTextField().setPreferredSize(new Dimension(50, 25));
 
         gbc.gridx = 0; gbc.gridy++;
-        form.add(lblEdad, gbc);
+        form.add(lblNoches, gbc);
         gbc.gridx = 1;
-        form.add(spinnerEdad, gbc);
+        form.add(spinnerNoches, gbc);
 
-        // Botón registrar
-        JButton btnRegistrar = new JButton("Registrar");
-        btnRegistrar.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        btnRegistrar.setPreferredSize(new Dimension(100, 30));
+        // Botón reservar
+        JButton btnReservar = new JButton("Reservar");
+        btnReservar.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnReservar.setPreferredSize(new Dimension(100, 30));
 
-        btnRegistrar.addActionListener(e -> {
-            String nombre = txtNombre.getText();
-            String clave = new String(txtClave.getPassword());
-            String especie = (String) comboEspecie.getSelectedItem();
-            int edad = (int) spinnerEdad.getValue();
+        btnReservar.addActionListener(e -> {
+            String habitacion = txtHabitacion.getText();
+            String fecha = txtFecha.getText();
+            int noches = (int) spinnerNoches.getValue();
 
-            Mascota m = new Mascota(nombre, especie, edad);
-            listaPacientes.add(m);
+            Reservas r = new Reservas(habitacion, fecha, noches);
+            listaReservas.add(r);
 
             JOptionPane.showMessageDialog(form,
-                    "🐾 Mascota registrada:\n" +
-                            "Nombre: " + nombre +
-                            "\nEspecie: " + especie +
-                            "\nEdad: " + edad + " años",
+                    " Reservacion registrada:\n" +
+                            "Numero Habitacion: " + habitacion +
+                            "\nFecha: " + fecha +
+                            "\nNoches: " + noches,
                     "Registro exitoso",
                     JOptionPane.INFORMATION_MESSAGE);
         });
@@ -190,15 +170,15 @@ public class VentanaPrincipal extends JFrame {
         gbc.gridx = 0; gbc.gridy++;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        form.add(btnRegistrar, gbc);
+        form.add(btnReservar, gbc);
 
         escritorio.add(form);
         form.setVisible(true);
     }
 
-    //TABLA DE PACIENTES CON PROGRESS BAR
-    private void mostrarTablaPacientes() {
-        JInternalFrame frameTabla = new JInternalFrame("Lista de pacientes", true, true, true, true);
+    //TABLA DE RESERVACIONES CON PROGRESS BAR
+    private void mostrarTablaReservaciones() {
+        JInternalFrame frameTabla = new JInternalFrame("Lista de reservaciones", true, true, true, true);
         frameTabla.setSize(600, 350);
         frameTabla.setLayout(new BorderLayout());
         JPanel panelCarga = new JPanel(new BorderLayout());
@@ -213,10 +193,10 @@ public class VentanaPrincipal extends JFrame {
                 barraProgreso.setValue(valor + 5);
             } else {
                 timer.stop();
-                String[] columnas = {"Nombre", "Especie", "Edad"};
+                String[] columnas = {"Habitacion", "Fecha", "Noches"};
                 DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
-                for (Mascota m : listaPacientes) {
-                    Object[] fila = {m.getNombre(), m.getEspecie(), m.getEdad()};
+                for (Reservas r : listaReservas) {
+                    Object[] fila = {r.getHabitacion(), r.getFecha(), r.getNoches()};
                     modelo.addRow(fila);
                 }
                 JTable tabla = new JTable(modelo);
